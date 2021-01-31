@@ -19,13 +19,11 @@ def estimate_coef(x,y):
     # calculation of regression coefficients
     b_1 = SS_xy/SS_xx
     b_0 = m_y-b_1*m_x
-    print("Estimated coefficients: \nb_0 = {} \ \nb_1 ={}".format(b[0], b[1]))
 
     return(b_0,b_1)
 
 def correlation_coefficient(x,y):
     c = np.corrcoef(x, y)
-    print("Correlation Coefficient = ", c)
     return(c)
 
 
@@ -65,46 +63,45 @@ def descrip_stats(x, y):
     print("Mean of y is {}", s)
     print("Standard Deviation of y is {}", t)
 
-def load_xdata() -> int:
+def load_xdata() -> float:
     xdata = []
     # Read in the independent variables
     f = open("xDataFile.csv")
-    for read_data in f:
-        read_data = f.readline()
-        xdata.append(read_data)
-
+    for read_data in f.readlines():
+        read_data = read_data.strip('\n')
+        xdata.append(float(read_data))
     f.close
-    # print(xdata)
+    print(xdata)
     return(xdata)
 
-def load_ydata() -> int:
+def load_ydata() -> float:
     ydata = []
     # Read in dependent variables
     f = open("yDataFile.csv")
-    for read_data in f:
-        read_data = f.readline()
-        ydata.append(read_data)
-
+    for read_data in f.readlines():
+        read_data = read_data.strip('\n')
+        ydata.append(float(read_data))
     f.close
-    # print(ydata)
+    print(ydata)
     return(ydata)
 
 
 def main():
 
     # test observations
-    # a = load_xdata()
-    # b = load_ydata()
-    x = np.array(load_xdata())
-    y = np.array(load_ydata())
+    a = load_xdata()
+    b = load_ydata()
+    print(a)
+    x = np.array(a)
+    y = np.array(b)
 
     # estimate coefficients
-    b = estimate_coef(x, y)
-    # print("Estimated coefficients: \nb_0 = {} \ \nb_1 ={}".format(b[0], b[1]))
+    b =estimate_coef(x, y)
+    print("Estimated coefficients: \nb_0 = {} \ \nb_1 ={}".format(b[0], b[1]))
 
     # calculate correlation Pearsons correlation coefficient
     d = correlation_coefficient(x,y)
-    # print("Correlation Coefficient = ", d)
+    print("Correlation Coefficient = ", d)
     descrip_stats(x, y)
 
     box_plot(x)
