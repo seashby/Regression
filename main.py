@@ -1,8 +1,11 @@
-# This program does regression analysis.
+# This program does regression analysis and some descriptive statistics.
+# The data sets are x = total Covid test performed in Oregon Mar-Nov 2020.
+# y = positive Covid test in Oregon Mar-Nov 2020.
 
 import numpy as np
 import matplotlib.pyplot as plt
 
+# Function to compute the coefficients
 def estimate_coef(x,y):
 
     # get the number of data points
@@ -22,11 +25,12 @@ def estimate_coef(x,y):
 
     return(b_0,b_1)
 
+# Function to compute the correlation Coefficient
 def correlation_coefficient(x,y):
     c = np.corrcoef(x, y)
     return(c)
 
-
+# Function to produce a regression plot
 def plot_regression_line(x, y, b):
 
     # plotting a scatter plot
@@ -45,6 +49,7 @@ def plot_regression_line(x, y, b):
     # exhibit the plot
     plt.show()
 
+# Function to generate a box plot of data
 def box_plot(x):
     fig, (ax1) = plt.subplots(nrows=1, ncols=1, figsize=(15, 7))
     labels = ['x1']
@@ -53,6 +58,7 @@ def box_plot(x):
     ax1.yaxis.grid(True)
     plt.show()
 
+# Function to compute and print the Mean, and standard deviation of data sets
 def descrip_stats(x, y):
     s = np.mean(x)
     t = np.std(x)
@@ -63,6 +69,7 @@ def descrip_stats(x, y):
     print("Mean of y is {}", s)
     print("Standard Deviation of y is {}", t)
 
+# Function to read the data set files
 def load_xdata() -> float:
     xdata = []
     # Read in the independent variables
@@ -88,14 +95,14 @@ def load_ydata() -> float:
 
 def main():
 
-    # test observations
+    # Read in test observations
     a = load_xdata()
     b = load_ydata()
     print(a)
     x = np.array(a)
     y = np.array(b)
 
-    # estimate coefficients
+    # Call estimate coefficients function and print results
     b =estimate_coef(x, y)
     print("Estimated coefficients: \nb_0 = {} \ \nb_1 ={}".format(b[0], b[1]))
 
@@ -104,6 +111,7 @@ def main():
     print("Correlation Coefficient = ", d)
     descrip_stats(x, y)
 
+    # Print boxplots of the data sets
     box_plot(x)
     box_plot(y)
 
